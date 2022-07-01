@@ -18,6 +18,6 @@ class Solution:
 
 
 if __name__ == "__main__":
-    # assert Solution().maximumUnits(boxTypes=[[1, 3], [2, 2], [3, 1]], truckSize=4) == 8
-    # assert Solution().maximumUnits(boxTypes=[[5, 10], [2, 5], [4, 7], [3, 9]], truckSize=10) == 91
+    assert Solution().maximumUnits(boxTypes=[[1, 3], [2, 2], [3, 1]], truckSize=4) == 8
+    assert Solution().maximumUnits(boxTypes=[[5, 10], [2, 5], [4, 7], [3, 9]], truckSize=10) == 91
     assert Solution().maximumUnits([[1, 3], [5, 5], [2, 5], [4, 2], [4, 1], [3, 1], [2, 2], [1, 3], [2, 5], [3, 2]], 35) == 76
