@@ -53,6 +53,82 @@ def interpolate(arr: List[Point], interval: int):
     return res
 
 
+# Make list of coin changes from an original coin
+def make_change(coin: int) -> List[int]:
+    cents = [25, 10, 5, 1]
+    L = len(cents)
+
+    res = [0, 0, 0, 0]
+    for i, cent in enumerate(cents):
+        while coin >= cent:
+            coin -= cent
+            res[L - i - 1] += 1
+
+    return res
+
+
+class Milestone:
+    def __init__(self, point, children):
+        self.point = point
+        self.children = children or []
+
+
+#      1
+#    /   \
+#   7     1
+#  /     /  \
+# 2     3    5
+
+game = Milestone(1,
+                 [
+                     Milestone(7, [
+                         Milestone(2, []),
+                     ]),
+                     Milestone(1, [
+                         Milestone(3, []),
+                         Milestone(5, []),
+                     ]),
+                 ]
+                 )
+
+game2 = Milestone(1,
+                  [
+                      Milestone(1, [
+                          Milestone(3, []),
+                          Milestone(5, []),
+                      ]),
+                      Milestone(7, [
+                          Milestone(2, []),
+                      ]),
+                  ]
+                  )
+
+game3 = Milestone(3,
+                  [
+                      Milestone(1, [
+                          Milestone(3, []),
+                          Milestone(5, []),
+                      ]),
+                      Milestone(-2, [
+                          Milestone(2, []),
+                      ]),
+                  ]
+                  )
+
+
+def find_max_game(node) -> int:
+    def dfs(node, s, res):
+        if len(node.children) == 0:
+            return max(res, s)
+
+        for child in node.children:
+            res = dfs(child, s + child.point, res)
+
+        return res
+
+    return dfs(node, node.point, 0)
+
+
 if __name__ == "__main__":
     assert to_buckets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2, 4) == {0: 1, 1: 2, 2: 2, 3: 2, 4: 3}
     assert to_buckets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, 4)
@@ -60,3 +136,7 @@ if __name__ == "__main__":
     res = interpolate([Point(1, 1), Point(2, 2), Point(5, 5), Point(6, 4), Point(7, 3), Point(10, 8), Point(11, 9)], 1)
     assert str([str(p) for p in res]) == \
            """['(1, 1.0)', '(2, 2.0)', '(3, 3.0)', '(4, 4.0)', '(5, 5.0)', '(6, 4.0)', '(7, 3.0000000000000018)', '(8, 4.666666666666668)', '(9, 6.333333333333334)', '(10, 8.0)', '(11, 9)']"""
+    assert make_change(33) == [3, 1, 0, 1]
+    assert find_max_game(game) == 10
+    assert find_max_game(game2) == 10
+    assert find_max_game(game3) == 9
