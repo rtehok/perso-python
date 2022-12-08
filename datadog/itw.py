@@ -58,11 +58,12 @@ def make_change(coin: int) -> List[int]:
     cents = [25, 10, 5, 1]
     L = len(cents)
 
-    res = [0, 0, 0, 0]
+    res = [0] * L
     for i, cent in enumerate(cents):
         while coin >= cent:
-            coin -= cent
-            res[L - i - 1] += 1
+            a = coin // cent
+            coin -= a * cent
+            res[L - i - 1] = a
 
     return res
 
