@@ -41,13 +41,7 @@ class LFUCache:
 
         if key in self.cache_key:
             self.cache_key[key][0] = value
-            old_cnt = self.cache_key[key][1]
-            self.cache_key[key][1] += 1
-            new_cnt = old_cnt + 1
-            del self.cache_orderedCount[old_cnt][key]
-            self._updateCacheCountDict(key, value, new_cnt)
-            if self.min_cnt == old_cnt and len(self.cache_orderedCount[old_cnt]) == 0:
-                self.min_cnt = new_cnt
+            self.get(key)
         else:
             if self.used < self.capacity:
                 self.used += 1
