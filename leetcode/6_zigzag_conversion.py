@@ -25,3 +25,4 @@ if __name__ == "__main__":
     print(Solution().convert("PAYPALISHIRING", 4))
     print(Solution().convert("AB", 1))
     print(Solution().convert("AB", 1))
+    print(Solution().convert("ABC", 1))
