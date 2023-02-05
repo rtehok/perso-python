@@ -1,30 +1,33 @@
+import collections
 from typing import List
 
 
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        if len(p) > len(s):
+        len_p, len_s = len(p), len(s)
+        if len_p > len_s:
             return []
 
-        pCount, sCount = {}, {}
-        for i in range(len(p)):
-            pCount[p[i]] = 1 + pCount.get(p[i], 0)
-            sCount[s[i]] = 1 + sCount.get(s[i], 0)
+        p_cnt, s_cnt = collections.defaultdict(int), collections.defaultdict(int)
 
-        res = [0] if sCount == pCount else []
+        for i, c in enumerate(p):
+            p_cnt[c] += 1
+            s_cnt[s[i]] += 1
+
+        res = [0] if p_cnt == s_cnt else []
 
         left = 0
 
-        for right in range(len(p), len(s)):
-            sCount[s[right]] = 1 + sCount.get(s[right], 0)
-            sCount[s[left]] -= 1
+        for right in range(len_p, len_s):
+            s_cnt[s[right]] += 1
+            s_cnt[s[left]] -= 1
 
-            if sCount[s[left]] == 0:
-                sCount.pop(s[left])
+            if s_cnt[s[left]] <= 0:
+                s_cnt.pop(s[left])
 
             left += 1
 
-            if sCount == pCount:
+            if p_cnt == s_cnt:
                 res.append(left)
 
         return res
