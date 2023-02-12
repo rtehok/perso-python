@@ -47,14 +47,14 @@ class Solution:
             nonlocal visited
             visited.add(node)
             cost_fuel = 0
-            num_rep = 1
+            nb_rep = 1
 
             for neighbor in graph[node]:
                 if neighbor not in visited:
-                    node_fuel, nb_child_rep = dfs(neighbor)
-                    num_rep += nb_child_rep
-                    cost_fuel += node_fuel + math.ceil(nb_child_rep / seats)
-            return cost_fuel, num_rep
+                    child_fuel, nb_child_rep = dfs(neighbor)
+                    nb_rep += nb_child_rep
+                    cost_fuel += child_fuel + math.ceil(nb_child_rep / seats)
+            return cost_fuel, nb_rep
 
         fuel, _ = dfs(0)
         return fuel
