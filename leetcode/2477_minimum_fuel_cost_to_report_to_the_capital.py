@@ -35,7 +35,7 @@ class Solution:
 
         return fuel
 
-    def minimumFuelCost(self, roads: List[List[int]], seats: int) -> int:
+    def minimumFuelCostDFS(self, roads: List[List[int]], seats: int) -> int:
         graph = collections.defaultdict(set)
         for a, b in roads:
             graph[a].add(b)
@@ -57,6 +57,31 @@ class Solution:
             return cost_fuel, nb_rep
 
         fuel, _ = dfs(0)
+        return fuel
+
+    def minimumFuelCost(self, roads: List[List[int]], seats: int) -> int:
+        fuel = 0
+
+        graph = collections.defaultdict(set)
+        for a, b in roads:
+            graph[a].add(b)
+            graph[b].add(a)
+
+        def dfs(node, parent):
+            nonlocal fuel
+            representatives_in_car = 1
+
+            for child in graph[node]:
+                if child != parent:
+                    representatives_in_car += dfs(child, node)
+
+            if node != 0:
+                fuel += math.ceil(representatives_in_car / seats)
+
+            return representatives_in_car
+
+        dfs(0, -1)
+
         return fuel
 
 
