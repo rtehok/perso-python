@@ -14,12 +14,20 @@ class Solution:
         #         prev = price
         # return profit
 
-        min = 0
+        # min = 0
+        # max_profit = 0
+        # for day, price in enumerate(prices):
+        #     if prices[min] >= price:
+        #         min = day
+        #     max_profit = max(max_profit, price - prices[min])
+        #
+        # return max_profit
+
         max_profit = 0
-        for day, price in enumerate(prices):
-            if prices[min] >= price:
-                min = day
-            max_profit = max(max_profit, price - prices[min])
+        min_price = prices[0]
+        for i in range(1, len(prices)):
+            min_price = min(min_price, prices[i])
+            max_profit = max(max_profit, prices[i] - min_price)
 
         return max_profit
 
