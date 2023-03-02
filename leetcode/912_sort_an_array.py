@@ -52,7 +52,7 @@ class Solution:
         return nums
 
     # Merge sort / short version
-    def sortArray(self, nums: List[int]) -> List[int]:
+    def sortArrayMS(self, nums: List[int]) -> List[int]:
         def mergeSort(arr):
             if len(arr) == 1:
                 return arr
@@ -72,6 +72,32 @@ class Solution:
             return res
 
         return mergeSort(nums)
+
+    def sortArray(self, nums: List[int]) -> List[int]:
+        def heapify(n, i):
+            largest = i
+            left = 2 * i + 1
+            right = 2 * i + 2
+            if left < n and nums[left] > nums[largest]:
+                largest = left
+            if right < n and nums[right] > nums[largest]:
+                largest = right
+
+            if largest != i:
+                nums[i], nums[largest] = nums[largest], nums[i]
+                heapify(n, largest)
+
+        def heapSort():
+            n = len(nums)
+            for i in range(n // 2 - 1, -1, -1):
+                heapify(n, i)
+
+            for i in range(n - 1, -1, -1):
+                nums[0], nums[i] = nums[i], nums[0]
+                heapify(i, 0)
+
+        heapSort()
+        return nums
 
 
 if __name__ == "__main__":
