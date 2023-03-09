@@ -8,7 +8,7 @@ class ListNode:
 
 
 class Solution:
-    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def detectCycleHashSet(self, head: Optional[ListNode]) -> Optional[ListNode]:
         node_map = set()
 
         while head:
@@ -19,6 +19,23 @@ class Solution:
             head = head.next
 
         return head
+
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                slow = head
+                while slow != fast:
+                    slow = slow.next
+                    fast = fast.next
+
+                return slow
+
+        return None
 
 
 if __name__ == "__main__":
