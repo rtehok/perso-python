@@ -1,5 +1,5 @@
 class Solution:
-    def isValid(self, s: str) -> bool:
+    def isValidV1(self, s: str) -> bool:
         mapping = {
             '(': ')',
             '[': ']',
@@ -17,6 +17,22 @@ class Solution:
                 else:
                     return False
 
+        return len(stack) == 0
+
+    def isValid(self, s: str) -> bool:
+        stack = []
+        if len(s) % 2 != 0:
+            return False
+
+        for c in s:
+            if c in {'(', '[', '{'}:
+                stack.append(c)
+            elif stack and ((c == ')' and stack[-1] == '(') or
+                            (c == ']' and stack[-1] == '[') or
+                            (c == '}' and stack[-1] == '{')):
+                stack.pop()
+            else:
+                return False
         return len(stack) == 0
 
 
