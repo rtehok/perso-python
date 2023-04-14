@@ -26,3 +26,8 @@ class Solution:
 
         second.next = second.next.next
         return head
+
+
+if __name__ == "__main__":
+    Solution().removeNthFromEnd(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2)
+
