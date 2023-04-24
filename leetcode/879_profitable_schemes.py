@@ -26,9 +26,8 @@ class Solution:
 
         return traverse(0, 0, 0)
 
-
 if __name__ == "__main__":
     assert Solution().profitableSchemes(n=5, minProfit=3, group=[2, 2], profits=[2, 3]) == 2
     assert Solution().profitableSchemes(n=10, minProfit=5, group=[2, 3, 5], profits=[6, 7, 8]) == 7
-    assert Solution().profitableSchemes(n=1, minProfit=1, group=[1, 1, 1, 1, 2, 2, 1, 2, 1, 1],
-                                        profits=[0, 1, 0, 0, 1, 1, 1, 0, 2, 2]) == 4
+    assert Solution().profitableSchemes(n=1, minProfit=1, group=[2, 2, 2, 2, 2], profits=[1, 2, 1, 1, 0]) == 0
+    assert Solution().profitableSchemes(n=64, minProfit=0, group=[80, 40], profits=[88, 88]) == 2
