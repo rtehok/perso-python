@@ -12,8 +12,6 @@ class Solution:
             if c in chars.keys():
                 start = max(start, chars[c] + 1)  # move start after repeated char
 
-            # print(i, start)
-
             chars[c] = i
             max_length = max(max_length, i - start + 1)
 
@@ -21,7 +19,8 @@ class Solution:
 
 
 if __name__ == "__main__":
-    print(Solution().lengthOfLongestSubstring("abcabcbb"))
-    print(Solution().lengthOfLongestSubstring("bbbbb"))
-    print(Solution().lengthOfLongestSubstring("pwwkew"))
-    print(Solution().lengthOfLongestSubstring("abba"))
+    assert Solution().lengthOfLongestSubstring("abcabcbb") == 3
+    assert Solution().lengthOfLongestSubstring("bbbbb") == 1
+    assert Solution().lengthOfLongestSubstring("pwwkew") == 3
+    assert Solution().lengthOfLongestSubstring("abba") == 2
+    assert Solution().lengthOfLongestSubstring("dvdf") == 3
