@@ -3,7 +3,7 @@ from typing import List
 
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        left, down = 1, 0
+        right, down = 1, 0
         row, col = 0, 0
         m, n = len(matrix), len(matrix[0])
         res = []
@@ -13,31 +13,31 @@ class Solution:
         while limit_up <= limit_down and limit_left <= limit_right:
             res.append(matrix[row][col])
 
-            # going left
-            if left == 1 and col == limit_right:
-                left = 0
+            # going right
+            if right == 1 and col == limit_right:
+                right = 0
                 down = 1
                 limit_up += 1
 
             # going down
             if down == 1 and row == limit_down:
                 down = 0
-                left = -1
+                right = -1
                 limit_right -= 1
 
             # going left
-            if left == -1 and col == limit_left:
-                left = 0
+            if right == -1 and col == limit_left:
+                right = 0
                 down = -1
                 limit_down -= 1
 
             # going up
             if down == -1 and row == limit_up:
                 down = 0
-                left = 1
+                right = 1
                 limit_left += 1
 
-            col += left
+            col += right
             row += down
 
         return res
