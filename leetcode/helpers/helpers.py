@@ -43,3 +43,40 @@ def is_same_tree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         return False
     else:
         return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def build_list(nums):
+    if not nums:
+        return None
+
+    head = ListNode(nums[0])
+    curr = head
+
+    for i in range(1, len(nums)):
+        node = ListNode(nums[i])
+        curr.next = node
+        curr = curr.next
+
+    return head
+
+def compare_linked_lists(head1, head2):
+    curr1 = head1
+    curr2 = head2
+
+    while curr1 and curr2:
+        if curr1.val != curr2.val:
+            return False
+        curr1 = curr1.next
+        curr2 = curr2.next
+
+    # If one list is longer than the other
+    if curr1 or curr2:
+        return False
+
+    return True
