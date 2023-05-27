@@ -11,21 +11,20 @@ class Solution:
             if i == n:
                 return 0
 
-            cumulative_sum = math.inf if player == 1 else -math.inf
+            res = math.inf if player == 1 else -math.inf
             s = 0
             for x in range(1, min(2 * m, n - i) + 1):
                 s += piles[i + x - 1]
                 if player == 0:
-                    cumulative_sum = max(cumulative_sum, s + helper(1, i + x, max(m, x)))
+                    res = max(res, s + helper(1, i + x, max(m, x)))
                 else:
-                    cumulative_sum = min(cumulative_sum,
-                                         helper(0, i + x, max(m, x)))  # bob wants to minimize Alice result
+                    res = min(res, helper(0, i + x, max(m, x)))  # bob wants to minimize Alice result
 
-            return cumulative_sum
+            return res
 
         return helper(0, 0, 1)
 
-    def stoneGameII(self, piles: List[int]) -> int:
+    def stoneGameIIDP(self, piles: List[int]) -> int:
         n = len(piles)
         dp = [[[-1] * (n + 1) for i in range(n + 1)] for p in (0, 1)]
 
@@ -36,20 +35,44 @@ class Solution:
             if dp[player][i][m] != -1:
                 return dp[player][i][m]
 
-            cumulative_sum = math.inf if player == 1 else -math.inf
+            res = math.inf if player == 1 else -math.inf
             s = 0
             for x in range(1, min(2 * m, n - i) + 1):
                 s += piles[i + x - 1]
                 if player == 0:
-                    cumulative_sum = max(cumulative_sum, s + helper(1, i + x, max(m, x)))
+                    res = max(res, s + helper(1, i + x, max(m, x)))
                 else:
-                    cumulative_sum = min(cumulative_sum,
-                                         helper(0, i + x, max(m, x)))  # bob wants to minimize Alice result
+                    res = min(res, helper(0, i + x, max(m, x)))  # bob wants to minimize Alice result
 
-            dp[player][i][m] = cumulative_sum
-            return cumulative_sum
+            dp[player][i][m] = res
+            return res
 
         return helper(0, 0, 1)
+
+    def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+        dp = [[0] * n for _ in range(n)]
+        suffix_sum = [0] * n
+        suffix_sum[-1] = piles[-1]
+        for i in range(n - 2, -1, -1):
+            suffix_sum[i] = piles[i] + suffix_sum[i + 1]
+
+        def helper(i, m):  # function to maximize score
+            if i == n:
+                return 0
+            if i + 2 * m >= n:
+                return suffix_sum[i]
+
+            if dp[i][m] != 0:
+                return dp[i][m]
+
+            res = 0
+            for x in range(1, 2 * m + 1):
+                res = max(res, suffix_sum[i] - helper(i + x, max(m, x)))
+            dp[i][m] = res
+            return res
+
+        return helper(0, 1)
 
 
 if __name__ == "__main__":
