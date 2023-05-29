@@ -24,9 +24,9 @@ if __name__ == "__main__":
     Solution().merge(nums1, 3, [2, 5, 6], 3)
     assert nums1 == [1, 2, 2, 3, 5, 6]
     nums1 = [1]
-    Solution().merge([1], 1, [], 0)
+    Solution().merge(nums1, 1, [], 0)
     assert nums1 == [1]
     nums1 = [0]
-    Solution().merge([0], 0, [1], 1)
+    Solution().merge(nums1, 0, [1], 1)
     assert nums1 == [1]
 
