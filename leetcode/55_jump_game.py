@@ -18,9 +18,8 @@ class Solution:
         left = n - 1  # leftmost element that can be reached
 
         for i in range(n - 2, -1, -1):
-            # nums[i] >= n - i - 1 ==> you can jump to the end
             # nums[i] >= left - i ==> you can jump to the next index (on the left) that can reach the end
-            if nums[i] >= n - i - 1 or nums[i] >= left - i:
+            if nums[i] >= left - i:
                 left = i
 
         return left == 0
