@@ -27,7 +27,7 @@ class Solution:
         min_len = float("inf")
 
         for i in range(n):
-            left = i + 1
+            left = i
             right = n
 
             while left <= right:
