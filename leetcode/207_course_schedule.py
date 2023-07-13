@@ -3,7 +3,7 @@ from typing import List
 
 
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinishBFS(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         graph = collections.defaultdict(set)
         for a, b in prerequisites:
             graph[b].add(a)
@@ -25,6 +25,38 @@ class Solution:
                     q.append(neighbor)
 
         return count == numCourses
+
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        inStack = [False] * numCourses
+        visit = [False] * numCourses
+
+        graph = collections.defaultdict(set)
+        for a, b in prerequisites:
+            graph[b].add(a)
+
+        def dfs(node):
+            if inStack[node]:
+                return True
+
+            if visit[node]:
+                return False
+
+            inStack[node] = True
+            visit[node] = True
+
+            for neighbor in graph[node]:
+                if dfs(neighbor):
+                    return True
+
+            inStack[node] = False
+
+            return False
+
+        for i in range(numCourses):
+            if dfs(i):
+                return False
+
+        return True
 
 
 if __name__ == "__main__":
