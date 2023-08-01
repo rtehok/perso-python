@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Solution:
+class SolutionV1:
     def dfs(self, nums: List[int], path: List[int], res: List[List[int]], k: int) -> None:
         if len(path) == k:
             res.append(path)
@@ -12,6 +12,24 @@ class Solution:
         res = []
         arr = [i for i in range(1, n + 1)]
         self.dfs(arr, [], res, k)
+
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        def backtrack(start, path):
+            if len(path) == k:
+                res.append(path[:])
+
+            for i in range(start, n + 1):
+                path.append(i)
+                backtrack(i + 1, path)
+                path.pop()
+
+        backtrack(1, [])
 
         return res
 
