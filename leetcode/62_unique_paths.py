@@ -26,9 +26,10 @@ class Solution:
         #
         # return res
 
-        dp = [[0 for _ in range(n)] for _ in range(m)]
+        dp = [[0] * n for _ in range(m)]
+        for j in range(n):
+            dp[0][j] = 1
 
-        dp[0] = [1 for _ in range(n)]
         for i in range(m):
             dp[i][0] = 1
 
@@ -36,9 +37,9 @@ class Solution:
             for j in range(1, n):
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
 
-        return dp[m - 1][n - 1]
+        return dp[-1][-1]
 
 
 if __name__ == "__main__":
-    print(Solution().uniquePaths(3, 2))
-    print(Solution().uniquePaths(3, 7))
+    assert Solution().uniquePaths(3, 2) == 3
+    assert Solution().uniquePaths(3, 7) == 28
