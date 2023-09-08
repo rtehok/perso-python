@@ -6,11 +6,15 @@ class Solution:
         res = [[1], [1, 1]]
 
         for i in range(3, numRows + 1):
-            last = res[-1]
-            next_row = [1] * (len(res[-1]) + 1)
-            for j in range(1, len(next_row) - 1):
-                next_row[j] = last[j - 1] + last[j]
-            res.append(next_row)
+            last_row = res[-1]
+            new_row = [last_row[0]]
+
+            for j in range(1, len(last_row)):
+                new_row.append(last_row[j] + last_row[j-1])
+
+            new_row.append(last_row[-1])
+
+            res.append(new_row)
 
         return res[:numRows]
 
