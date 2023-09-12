@@ -1,5 +1,8 @@
+import collections
+
+
 class Solution:
-    def minDeletions(self, s: str) -> int:
+    def minDeletionsGreedy(self, s: str) -> int:
         frequency = [0] * 26
         for c in s:
             frequency[ord(c) - ord('a')] += 1
@@ -13,6 +16,21 @@ class Solution:
                 freq = max_freq_allowed
 
             max_freq_allowed = max(0, freq - 1)
+
+        return delete_count
+
+    def minDeletions(self, s: str) -> int:
+        frequency = collections.Counter(s)
+        delete_count = 0
+
+        unique_freq = set()
+
+        for freq in frequency.values():
+            while freq in unique_freq:
+                freq -= 1
+                delete_count += 1
+            if freq > 0:
+                unique_freq.add(freq)
 
         return delete_count
 
