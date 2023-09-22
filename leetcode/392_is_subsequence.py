@@ -1,5 +1,5 @@
 class Solution:
-    def isSubsequence(self, s: str, t: str) -> bool:
+    def isSubsequenceV1(self, s: str, t: str) -> bool:
         # if len(s) > len(t):
         #     return False
         #
@@ -28,8 +28,38 @@ class Solution:
 
         return subsequence_length == len(s)
 
+    def isSubsequenceV2(self, s: str, t: str) -> bool:
+        m, n = len(s), len(t)
+        if m > n:
+            return False
+
+        p1 = p2 = 0
+
+        while p1 < m:
+            if p2 == n:
+                return False
+
+            if s[p1] == t[p2]:
+                p1 += 1
+                p2 += 1
+            elif p2 < n:
+                p2 += 1
+
+        return True
+
+    def isSubsequence(self, s: str, t: str) -> bool:
+        i, j = 0, 0
+
+        while i < len(s) and j < len(t):
+            if s[i] == t[j]:
+                i += 1
+
+            j += 1
+
+        return i == len(s)
+
 
 if __name__ == "__main__":
-    # assert Solution().isSubsequence("abc", "ahbgdc")
-    # assert not Solution().isSubsequence("axc", "ahbgdc")
+    assert Solution().isSubsequence("abc", "ahbgdc")
+    assert not Solution().isSubsequence("axc", "ahbgdc")
     assert Solution().isSubsequence("b", "abc")
