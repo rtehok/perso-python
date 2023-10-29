@@ -11,7 +11,7 @@ class Solution:
 
             return total_hr <= h
 
-        left, right = 1, max(piles)
+        left, right = min(piles), max(piles)
 
         while left < right:
             mid = (left + right) // 2
