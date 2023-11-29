@@ -1,11 +1,12 @@
 class Solution:
+    def hammingWeightV1(self, n: int) -> int:
+        return str(bin(n)[2:]).count("1")
+
     def hammingWeight(self, n: int) -> int:
-        # print("{0:b}".format(n))
-        # return sum([(n & (1 << i)) != 0 for i in range(32)])
         res = 0
         while n != 0:
-            res += n & 1  # count if rightmost digit is 1
-            n = n >> 1  # shift right
+            res += n & 1
+            n >>= 1
         return res
 
 
