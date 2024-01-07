@@ -1,9 +1,10 @@
+import bisect
 from bisect import bisect_left
 from typing import List
 
 
 class Solution:
-    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+    def jobSchedulingV1(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
         dp = [[0, 0]]  # contains [end time, max profit]
 
         # bisect_left(arr, x) gives the closest (on the left) value to x in array
@@ -17,6 +18,17 @@ class Solution:
             # exclude: f(e) stays the same
 
         return dp[-1][1]
+
+    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+        jobs = sorted(zip(endTime, startTime, profit))
+        nb_of_jobs = len(profit)
+        dp = [0] * (nb_of_jobs + 1)
+
+        for i, (e, s, p) in enumerate(jobs):
+            index = bisect.bisect_right(jobs, s, hi=i, key=lambda x: x[0])
+            dp[i + 1] = max(dp[i], dp[index] + p)
+
+        return dp[-1]
 
 
 if __name__ == "__main__":
