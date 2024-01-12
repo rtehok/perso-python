@@ -1,22 +1,17 @@
 class Solution:
     def halvesAreAlike(self, s: str) -> bool:
-        vowels = set('aeiouAEIOU')
-
-        mid = len(s) // 2 - 1 if len(s) % 2 == 0 else len(s) // 2
-        i, j = mid, mid + 1
-        count = 0
-
-        while i >= 0:
+        n = len(s)
+        mid = n // 2
+        n1, n2 = 0, 0
+        vowels = set("aeiouAEIOU")
+        for i in range(mid):
             if s[i] in vowels:
-                count += 1
-            i -= 1
+                n1 += 1
+        for i in range(mid, n):
+            if s[i] in vowels:
+                n2 += 1
 
-        while j < len(s):
-            if s[j] in vowels:
-                count -= 1
-            j += 1
-
-        return count == 0
+        return n1 == n2
 
 
 if __name__ == "__main__":
