@@ -2,7 +2,7 @@ from typing import List
 
 
 class Solution:
-    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+    def minFallingPathSumV1(self, matrix: List[List[int]]) -> int:
         n = len(matrix)
 
         if n == 1:
@@ -13,6 +13,20 @@ class Solution:
             matrix[i][-1] = matrix[i][-1] + min(matrix[i - 1][-2], matrix[i - 1][-1])
             for j in range(1, n - 1):
                 matrix[i][j] = matrix[i][j] + min([matrix[i - 1][j - 1], matrix[i - 1][j], matrix[i - 1][j + 1]])
+
+        return min(matrix[-1])
+
+    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+        m, n = len(matrix), len(matrix[0])
+
+        for i in range(1, m):
+            for j in range(n):
+                if j == 0 and n > 1:
+                    matrix[i][j] += min(matrix[i - 1][j], matrix[i - 1][j + 1])
+                if 1 <= j < n - 1:
+                    matrix[i][j] += min(matrix[i - 1][j - 1], matrix[i - 1][j], matrix[i - 1][j + 1])
+                if j == n - 1 and n > 1:
+                    matrix[i][j] += min(matrix[i - 1][j - 1], matrix[i - 1][j])
 
         return min(matrix[-1])
 
