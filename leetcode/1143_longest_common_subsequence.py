@@ -1,47 +1,49 @@
 class Solution:
     def longestCommonSubsequenceRecursive(self, text1: str, text2: str) -> int:
-        def helper(s1, s2, i, j):
-            if i == len(s1) or j == len(s2):
+        m, n = len(text1), len(text2)
+        dp = [[-1] * n for _ in range(m)]
+
+        def dfs(i, j):
+            if i == len(text1) or j == len(text2):
                 return 0
 
-            if s1[i] == s2[j]:
-                return 1 + helper(s1, s2, i + 1, j + 1)
+            if dp[i][j] != -1:
+                return dp[i][j]
+
+            if text1[i] == text2[j]:
+                dp[i][j] = 1 + dfs(i + 1, j + 1)
             else:
-                return max(helper(s1, s2, i + 1, j), helper(s1, s2, i, j + 1))
+                dp[i][j] = max(dfs(i + 1, j), dfs(i, j + 1))
+            return dp[i][j]
 
-        return helper(text1, text2, 0, 0)
+        return dfs(0, 0)
 
-    def longestCommonSubsequenceSubOptimal(self, text1: str, text2: str) -> int:
-        m = len(text1)
-        n = len(text2)
-        dp = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
-        for row in range(1, n + 1):
-            for col in range(1, m + 1):
-                if text1[col - 1] == text2[row - 1]:
-                    # the one in the diagonal (add to the longest subsequence up to char in text1 AND text2)
-                    dp[row][col] = 1 + dp[row - 1][col - 1]
+    def longestCommonSubsequenceTab(self, text1: str, text2: str) -> int:
+        m, n = len(text1), len(text2)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                if text1[i] == text2[j]:
+                    dp[i][j] = 1 + dp[i + 1][j + 1]
                 else:
-                    # take the max in order to add + 1 if needed (the longest subsequence)
-                    dp[row][col] = max(dp[row][col - 1], dp[row - 1][col])
+                    dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
 
-        return dp[n][m]
+        return dp[0][0]
 
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        m = len(text1)
-        n = len(text2)
+        m, n = len(text1), len(text2)
+        dp = [0] * (n + 1)
 
-        if m < n:
-            return self.longestCommonSubsequence(text2, text1)
-
-        dp = [[0 for _ in range(n + 1)] for _ in range(2)]
-        for i in range(m):
-            for j in range(n):
+        for i in range(m - 1, -1, -1):
+            next_dp = [0] * (n + 1)
+            for j in range(n - 1, -1, -1):
                 if text1[i] == text2[j]:
-                    dp[1 - i % 2][j + 1] = 1 + dp[i % 2][j]  # equivalent of the left diagonal value
+                    next_dp[j] = 1 + dp[j + 1]
                 else:
-                    dp[1 - i % 2][j + 1] = max(dp[1 - i % 2][j], dp[i % 2][j + 1])  # equivalent to the left and up values
+                    next_dp[j] = max(dp[j], next_dp[j + 1])
+            dp = next_dp
 
-        return dp[m % 2][n]
+        return dp[0]
 
 
 if __name__ == "__main__":
