@@ -4,34 +4,28 @@ from typing import List
 
 class Solution:
     def groupThePeopleV1(self, groupSizes: List[int]) -> List[List[int]]:
-        res = []
-        d = collections.defaultdict(list)
+        ans = []
+        groups = collections.defaultdict(list)
         for i, size in enumerate(groupSizes):
-            if size == 1:
-                res.append([i])
-                continue
+            if size in groups and len(groups[size][-1]) < size:
+                groups[size][-1].append(i)
+            else:
+                groups[size].append([i])
+        for k, v_arr in groups.items():
+            for v in v_arr:
+                ans.append(v)
 
-            if len(d[size]) < size:
-                d[size].append(i)
-            elif len(d[size]) == size:
-                res.append(d[size])
-                d[size] = [i]
-
-        for size, arr in d.items():
-            if size == len(arr):
-                res.append(d[size])
-
-        return res
+        return ans
 
     def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
-        res = []
+        ans = []
         groups = collections.defaultdict(list)
         for i, size in enumerate(groupSizes):
             groups[size].append(i)
             if len(groups[size]) == size:
-                res.append(groups.pop(size))
+                ans.append(groups.pop(size))
 
-        return res
+        return ans
 
 
 if __name__ == "__main__":
