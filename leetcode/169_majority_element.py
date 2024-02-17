@@ -1,3 +1,4 @@
+import collections
 from typing import List
 
 
@@ -19,7 +20,7 @@ class SolutionV1:
 
 
 class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
+    def majorityElementV1(self, nums: List[int]) -> int:
         candidate = 0
         count = 0
 
@@ -29,6 +30,9 @@ class Solution:
             count += 1 if candidate == num else -1
 
         return candidate
+
+    def majorityElement(self, nums: List[int]) -> int:
+        return collections.Counter(nums).most_common(1)[0][0]
 
 
 if __name__ == "__main__":
