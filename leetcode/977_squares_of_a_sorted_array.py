@@ -2,18 +2,20 @@ from typing import List
 
 
 class Solution:
+    def sortedSquaresV1(self, nums: List[int]) -> List[int]:
+        return sorted([num ** 2 for num in nums])
+
     def sortedSquares(self, nums: List[int]) -> List[int]:
-        # return sorted(map(lambda x: x * x, nums))
-        i, j = 0, len(nums) - 1
+        l, r = 0, len(nums) - 1
         res = []
-        while i <= j:
-            if nums[i] ** 2 < nums[j] ** 2:
-                res.insert(0, nums[j] ** 2)
-                j -= 1
+        while l <= r:
+            if abs(nums[l]) < abs(nums[r]):
+                res.append(nums[r] ** 2)
+                r -= 1
             else:
-                res.insert(0, nums[i] ** 2)
-                i += 1
-        return res
+                res.append(nums[l] ** 2)
+                l += 1
+        return res[::-1]
 
 
 if __name__ == "__main__":
