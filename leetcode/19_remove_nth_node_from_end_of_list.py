@@ -17,7 +17,7 @@ class Solution:
             n -= 1
             first = first.next
 
-        while first.next is not None:
+        while first.next:
             first = first.next
             second = second.next
 
@@ -29,5 +29,7 @@ class Solution:
 
 
 if __name__ == "__main__":
+    Solution().removeNthFromEnd(ListNode(1, ListNode(2)), 1)
+    Solution().removeNthFromEnd(ListNode(1), 1)
     Solution().removeNthFromEnd(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2)
 
