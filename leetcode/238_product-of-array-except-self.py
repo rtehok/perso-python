@@ -23,6 +23,21 @@ class Solution:
 
         return ans
 
+    def productExceptSelfV1(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        res = [1] * n
+
+        l = r = 1
+        for i in range(1, n):
+            l *= nums[i - 1]
+            res[i] *= l
+
+        for i in range(n - 2, -1, -1):
+            r *= nums[i + 1]
+            res[i] *= r
+
+        return res
+
 
 assert Solution().productExceptSelf(nums=[1, 2, 3, 4]) == [24, 12, 8, 6]
 assert Solution().productExceptSelf(nums=[-1, 1, 0, -3, 3]) == [0, 0, 9, 0, 0]
