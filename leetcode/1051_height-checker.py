@@ -12,6 +12,6 @@ class Solution:
         return ans
 
 
-assert Solution().heightChecker([1, 1, 4, 2, 1, 3]) == 3
-assert Solution().heightChecker([5, 1, 2, 3, 4]) == 5
-assert Solution().heightChecker([1, 2, 3, 4, 5]) == 0
+assert Solution().heightChecker(heights=[1, 1, 4, 2, 1, 3]) == 3
+assert Solution().heightChecker(heights=[5, 1, 2, 3, 4]) == 5
+assert Solution().heightChecker(heights=[1, 2, 3, 4, 5]) == 0
